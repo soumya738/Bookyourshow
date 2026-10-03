@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101014">
+    <title>Sign in | BookMyShow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <style>
+        :root {
+            color-scheme: dark;
+            --page: #101014;
+            --surface: #19191f;
+            --text: #f7f5f2;
+            --muted: #aaa8b0;
+            --line: rgba(255, 255, 255, .12);
+            --accent: #ed315a;
+            --accent-hover: #d91e49;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: var(--page);
+            color: var(--text);
+            font-family: "DM Sans", sans-serif;
+        }
+        a { color: inherit; text-decoration: none; }
+        button, input { font: inherit; }
+        .page-shell { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(380px, .8fr); }
+        .story-panel {
+            position: relative;
+            display: flex;
+            min-height: 100vh;
+            align-items: end;
+            overflow: hidden;
+            padding: clamp(32px, 7vw, 90px);
+            background: #21151b url("https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1800&q=85") center / cover no-repeat;
+            isolation: isolate;
+        }
+        .story-panel::before { position: absolute; z-index: -1; inset: 0; background: linear-gradient(0deg, rgba(12, 10, 14, .9), rgba(12, 10, 14, .05) 80%), linear-gradient(90deg, rgba(12, 10, 14, .3), transparent); content: ""; }
+        .brand { position: absolute; top: 34px; left: clamp(32px, 7vw, 90px); font-family: "Space Grotesk", sans-serif; font-size: 1.55rem; font-weight: 700; }
+        .brand span { color: var(--accent); }
+        .story-copy { max-width: 520px; }
+        .eyebrow { margin: 0 0 14px; color: #ff8ba0; font-size: .78rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+        .story-copy h1 { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: clamp(2.2rem, 4.4vw, 4rem); line-height: 1.04; }
+        .story-copy p { max-width: 420px; margin: 16px 0 0; color: rgba(255, 255, 255, .76); line-height: 1.65; }
+        .form-panel { display: grid; place-items: center; padding: 36px; }
+        .auth-form { width: min(100%, 410px); }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 40px; color: var(--muted); font-size: .9rem; }
+        .back-link:hover { color: var(--text); }
+        .form-heading { margin-bottom: 26px; }
+        .form-heading h2 { margin: 0; font-family: "Space Grotesk", sans-serif; font-size: 2rem; }
+        .form-heading p { margin: 8px 0 0; color: var(--muted); }
+        .mode-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 25px; padding: 4px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+        .mode-button { min-height: 42px; border: 0; border-radius: 4px; background: transparent; color: var(--muted); cursor: pointer; font-weight: 600; }
+        .mode-button[aria-selected="true"] { background: #303038; color: var(--text); }
+        .field { display: grid; gap: 8px; margin-bottom: 18px; }
+        .field label { font-size: .9rem; font-weight: 600; }
+        .field input { width: 100%; min-height: 48px; padding: 0 13px; border: 1px solid var(--line); border-radius: 5px; outline: 0; background: var(--surface); color: var(--text); }
+        .field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(237, 49, 90, .16); }
+        .field input::placeholder { color: #77747e; }
+        .submit-button { width: 100%; min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; margin-top: 4px; border: 1px solid var(--accent); border-radius: 5px; background: var(--accent); color: #fff; cursor: pointer; font-weight: 700; transition: background-color .2s ease, transform .2s ease; }
+        .submit-button:hover { transform: translateY(-1px); border-color: var(--accent-hover); background: var(--accent-hover); }
+        .form-note { min-height: 24px; margin: 14px 0 0; color: var(--muted); font-size: .85rem; line-height: 1.5; }
+        .form-note:empty { min-height: 0; }
+        [hidden] { display: none !important; }
+        @media (max-width: 760px) {
+            .page-shell { grid-template-columns: 1fr; }
+            .story-panel { min-height: 300px; padding: 38px 28px; }
+            .brand { top: 24px; left: 28px; }
+            .story-copy h1 { max-width: 480px; font-size: 2.35rem; }
+            .story-copy p { margin-top: 10px; }
+            .form-panel { padding: 34px 24px 48px; }
+            .back-link { margin-bottom: 28px; }
+        }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+    </style>
+</head>
+<body>
+    <main class="page-shell">
+        <section class="story-panel" aria-labelledby="story-title">
+            <a class="brand" href="index.html" aria-label="BookMyShow home">Book<span>My</span>Show</a>
+            <div class="story-copy">
+                <p class="eyebrow">Make room for memorable</p>
+                <h1 id="story-title">The best nights begin with a plan.</h1>
+                <p>Find the movies, shows and live moments you’ll be talking about tomorrow.</p>
+            </div>
+        </section>
+        <section class="form-panel" aria-label="Account access">
+            <div class="auth-form">
+                <a class="back-link" href="index.html"><i data-lucide="arrow-left" aria-hidden="true"></i> Back to home</a>
+                <div class="form-heading">
+                    <h2 id="form-title">Welcome back</h2>
+                    <p id="form-description">Sign in to continue to BookMyShow.</p>
+                </div>
+                <div class="mode-switch" role="tablist" aria-label="Account action">
+                    <button class="mode-button" id="signin-tab" type="button" role="tab" aria-selected="true" aria-controls="account-fields" data-mode="signin">Sign in</button>
+                    <button class="mode-button" id="signup-tab" type="button" role="tab" aria-selected="false" aria-controls="account-fields" data-mode="signup">Create account</button>
+                </div>
+                <form id="account-form" novalidate>
+                    <div class="field" id="name-field" hidden>
+                        <label for="name">Your name</label>
+                        <input id="name" name="name" type="text" autocomplete="name" placeholder="Enter your name" disabled>
+                    </div>
+                    <div class="field">
+                        <label for="email">Email address</label>
+                        <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+                    </div>
+                    <button class="submit-button" id="submit-button" type="submit">Sign in <i data-lucide="arrow-right" aria-hidden="true"></i></button>
+                    <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </section>
+    </main>
+    <script>
+        const tabs = [...document.querySelectorAll(".mode-button")];
+        const nameField = document.getElementById("name-field");
+        const nameInput = document.getElementById("name");
+        const passwordInput = document.getElementById("password");
+        const formNote = document.getElementById("form-note");
+
+        function setMode(mode) {
+            const isSignup = mode === "signup";
+            tabs.forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.mode === mode)));
+            nameField.hidden = !isSignup;
+            nameInput.disabled = !isSignup;
+            nameInput.required = isSignup;
+            passwordInput.autocomplete = isSignup ? "new-password" : "current-password";
+            document.getElementById("form-title").textContent = isSignup ? "Create your account" : "Welcome back";
+            document.getElementById("form-description").textContent = isSignup ? "Join in and make your next plan." : "Sign in to continue to BookMyShow.";
+            document.getElementById("submit-button").innerHTML = `${isSignup ? "Create account" : "Sign in"} <i data-lucide="arrow-right" aria-hidden="true"></i>`;
+            formNote.textContent = "";
+            history.replaceState(null, "", `#${mode}`);
+            lucide.createIcons();
+        }
+
+        tabs.forEach((tab) => tab.addEventListener("click", () => setMode(tab.dataset.mode)));
+        setMode(location.hash === "#signup" ? "signup" : "signin");
+        document.getElementById("account-form").addEventListener("submit", (event) => {
+            event.preventDefault();
+            if (!event.currentTarget.reportValidity()) return;
+            formNote.textContent = "Account access is not connected yet. Your details have not been sent.";
+        });
+        lucide.createIcons();
+    </script>
+</body>
+</html>
